@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
+import userValidate from "../utils/userValidate";
 import Header from "./Header";
-import { checkValidSignIn, checkValidSignUp } from "../utils/formValidate";
 
 const Login = () => {
 
@@ -19,14 +19,9 @@ const Login = () => {
     const handleUserButtonClick = () => {
 
         // valid form data
-        let message;
-
-        if(isSignInForm) {
-            message = checkValidSignIn(email.current.value, password.current.value);
-            setErrorMessage(message);
-        }
-        else{
-            message = checkValidSignUp(name.current.value, email.current.value, password.current.value);
+        const message = userValidate(name, email, password);
+        
+        if(message) {
             setErrorMessage(message);
         }
         
