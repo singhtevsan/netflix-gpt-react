@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "./Header";
+import { checkValidSignIn, checkValidSignUp } from "../utils/formValidate";
 
 const Login = () => {
 
@@ -7,6 +8,28 @@ const Login = () => {
 
     const toggleLoginForm = () => {
         setIsSignInForm(!isSignInForm);
+    };
+
+    const name = useRef(null);
+    const email = useRef(null);
+    const password = useRef(null);
+
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    const handleUserButtonClick = () => {
+
+        // valid form data
+        let message;
+
+        if(isSignInForm) {
+            message = checkValidSignIn(email.current.value, password.current.value);
+            setErrorMessage(message);
+        }
+        else{
+            message = checkValidSignUp(name.current.value, email.current.value, password.current.value);
+            setErrorMessage(message);
+        }
+        
     };
 
     return (
@@ -17,25 +40,31 @@ const Login = () => {
             <div className="my-10 flex justify-center items-center">
                 <div className="p-8 w-[30%] bg-black bg-opacity-80 rounded-md">
 
-                    <form className="w-[80%] m-auto">
+                    <form className="w-[80%] m-auto" onSubmit={(event)=>event.preventDefault()}>
 
                         <h1 className="text-white text-2xl font-bold my-2">{isSignInForm ? 'Sign In' : 'Sign Up'}</h1>
 
                         {
                             isSignInForm ? '' :
-                            <input className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="text" placeholder="Enter Your Name" />
+                            <input ref={name} className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="text" placeholder="Enter Your Name" />
                         }
 
-                        <input className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="email" placeholder="Enter Your Email" />
+                        <input ref={email} className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="email" placeholder="Enter Your Email" />
                 
-                        <input className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="password" placeholder="Enter Your Password" />
+                        <input ref={password} className="bg-gray-900 text-white w-full my-2 p-2 rounded" type="password" placeholder="Enter Your Password" />
                         {
-                            isSignInForm ? '' :
-                            <p className="text-white text-xs">Password must be 8 digit long and should contain one capital and one special letter.</p>
+                            isSignInForm ?  
+                                (errorMessage ? <span className=" text-red-600">{errorMessage}</span> : '')
+                            : 
+                                (
+                                    errorMessage ? <span className="text-red-600">{errorMessage}</span> : 
+                                    <p className="text-white text-xs">Password must be 8 digit long and should contain one capital and one special letter.</p>
+                                )
+                            
                         }
                         
 
-                        <button className="bg-red-600 text-white w-full my-2 p-1 rounded text-xl cursor-pointer" >
+                        <button className="bg-red-600 text-white w-full my-2 p-1 rounded text-xl cursor-pointer" onClick={handleUserButtonClick}>
                             {isSignInForm ? 'Sign In' : 'Sign Up'}
                         </button>
 
