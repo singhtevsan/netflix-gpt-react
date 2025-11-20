@@ -1,30 +1,40 @@
 import { useRef, useState } from "react";
 import userValidate from "../utils/userValidate";
 import Header from "./Header";
+import userAuthentication from "../utils/userAuthentication";
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const toggleLoginForm = () => {
         setIsSignInForm(!isSignInForm);
+        setErrorMessage(null);
     };
 
     const name = useRef(null);
     const email = useRef(null);
     const password = useRef(null);
 
-    const [errorMessage, setErrorMessage] = useState(null);
-
     const handleUserButtonClick = () => {
 
         // valid form data
         const message = userValidate(name, email, password);
-        
-        if(message) {
-            setErrorMessage(message);
+        setErrorMessage(message);
+
+        if(message) return;
+
+        // sign in or sign up the user
+
+        if(!isSignInForm){
+            // sign up the user
+            userAuthentication(name,email,password,true,setErrorMessage);
         }
-        
+        else {
+            // sign in the user
+            userAuthentication(name,email,password,false,setErrorMessage);
+        }
     };
 
     return (
