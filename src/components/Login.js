@@ -2,11 +2,13 @@ import { useRef, useState } from "react";
 import userValidate from "../utils/userValidate";
 import Header from "./Header";
 import userAuthentication from "../utils/userAuthentication";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
+    const navigate = useNavigate();
 
     const toggleLoginForm = () => {
         setIsSignInForm(!isSignInForm);
@@ -30,10 +32,16 @@ const Login = () => {
         if(!isSignInForm){
             // sign up the user
             userAuthentication(name,email,password,true,setErrorMessage);
+            if(!errorMessage){
+                navigate("/browse");
+            }
         }
         else {
             // sign in the user
             userAuthentication(name,email,password,false,setErrorMessage);
+            if(!errorMessage){
+                navigate("/browse");
+            }
         }
     };
 
