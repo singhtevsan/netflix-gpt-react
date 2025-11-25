@@ -1,14 +1,17 @@
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRef, useState } from "react";
+import { useDispatch } from "react-redux";
+import { USER_AVATAR } from "../utils/constants";
+import { auth } from "../utils/firebase";
+import { addUser } from "../utils/userSlice";
 import userValidate from "../utils/userValidate";
 import Header from "./Header";
-import userAuthentication from "../utils/userAuthentication";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
 
     const [isSignInForm, setIsSignInForm] = useState(true);
     const [errorMessage, setErrorMessage] = useState(null);
-    const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const toggleLoginForm = () => {
         setIsSignInForm(!isSignInForm);
@@ -31,17 +34,55 @@ const Login = () => {
 
         if(!isSignInForm){
             // sign up the user
-            userAuthentication(name,email,password,true,setErrorMessage);
-            if(!errorMessage){
-                navigate("/browse");
-            }
+            
+            createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+    
+                updateProfile(user, {
+                    displayName: name.current.value,
+                    photoURL: USER_AVATAR
+                }).then(() => {
+                    // Profile updated!
+                    // adding user to redux store
+                    const {uid, email, displayName, photoURL} = auth.currentUser;
+                    
+                    dispatch(addUser({
+                        uid: uid,
+                        email: email,
+                        displayName: displayName,
+                        photoURL: photoURL
+                    }));
+                    
+
+                }).catch((error) => {
+                    // An error occurred
+                    setErrorMessage(error.message);
+                });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " : " + errorMessage);
+            });
+
         }
         else {
             // sign in the user
-            userAuthentication(name,email,password,false,setErrorMessage);
-            if(!errorMessage){
-                navigate("/browse");
-            }
+            
+            signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+            .then((userCredential) => {
+                // Signed in 
+                const user = userCredential.user;
+                console.log(user.email);
+                
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                setErrorMessage(errorCode + " : " + errorMessage);
+            });
         }
     };
 
