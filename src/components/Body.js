@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "./Login";
 import Browse from "./Browse";
+import AppLayout from "./AppLayout";
+import Error from "./Error";
 
 const Body = () => {
 
@@ -10,8 +12,19 @@ const Body = () => {
             element: <Login />
         },
         {
-            path: "/browse",
-            element: <Browse />
+            path: "/",
+            element: <AppLayout />,
+            children: [
+
+                {
+                    path: "/browse",
+                    element: <Browse />
+                },
+                {
+                    path: "/error",
+                    element: <Error />
+                }
+            ]
         }
     ]);
     

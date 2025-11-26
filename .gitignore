@@ -31,3 +31,4 @@ yarn-error.log*
 /src/setupTests.js
 /README.md
 /.env
+/src/utils/firebase.js
