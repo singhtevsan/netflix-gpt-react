@@ -1,4 +1,6 @@
 import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
+import MoviesContainer from "./MoviesContainer";
+import TrailerContainer from "./TrailerContainer";
 
 
 /*
@@ -18,7 +20,8 @@ const Browse = () => {
 
     return (
         <div>
-            Browse Page
+            <TrailerContainer />
+            <MoviesContainer />
         </div>
     )
 };

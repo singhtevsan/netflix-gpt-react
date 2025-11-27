@@ -87,11 +87,11 @@ const Login = () => {
     };
 
     return (
-        <div className="h-[100vh] bg-cover bg-[image:var(--bg-image)]">
+        <div className="h-[100vh] bg-cover bg-[image:var(--bg-image)] relative">
             
             <Header />
 
-            <div className="my-10 flex justify-center items-center">
+            <div className="flex justify-center items-center h-full">
                 <div className="p-8 w-[30%] bg-black bg-opacity-80 rounded-md">
 
                     <form className="w-[80%] m-auto" onSubmit={(event)=>event.preventDefault()}>

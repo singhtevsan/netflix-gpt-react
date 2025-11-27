@@ -57,7 +57,7 @@ const Header = () => {
 
 
     return (
-        <div className="w-full bg-gradient-to-b from-black flex justify-between items-center">
+        <div className="w-full bg-gradient-to-b from-black flex justify-between items-center absolute">
             
             <img className="h-20 cursor-pointer" src={LOGO} alt="netflix" />
             {
