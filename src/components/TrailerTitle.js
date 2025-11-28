@@ -15,9 +15,12 @@ const TrailerTitle = (props) => {
         setHideOverview(false);
         hide();
     };
-
+        
     useEffect(()=>{
         hide();
+        return () => {
+            clearTimeout(hide);
+        }
     }, []);
 
     return (

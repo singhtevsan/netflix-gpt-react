@@ -3,6 +3,7 @@ import MoviesContainer from "./MoviesContainer";
 import TrailerContainer from "./TrailerContainer";
 import useGetAllTheData from "../hooks/useGetAllTheData";
 import ShowsTrailerContainer from "./ShowsTrailerContainer";
+import ShowsContainer from "./ShowsContainer";
 
 
 /*
@@ -36,6 +37,7 @@ const Browse = () => {
             return(
                 <div>
                     <ShowsTrailerContainer />
+                    <ShowsContainer />
                 </div>
             )
         }
