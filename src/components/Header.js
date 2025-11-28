@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleView } from "../utils/changeViewSlice";
 
 const Header = () => {
 
@@ -56,14 +57,26 @@ const Header = () => {
     }, []);
 
 
+    const handleViewToggle = (value) => {
+        dispatch(toggleView(value))
+    }
+
     return (
-        <div className="w-full bg-gradient-to-b from-black flex justify-between items-center absolute">
+        <div className="w-full bg-gradient-to-b from-black flex items-center absolute z-10">
             
-            <img className="h-20 cursor-pointer" src={LOGO} alt="netflix" />
+            <img className="h-20 cursor-pointer" src={LOGO} alt="netflix" onClick={()=>handleViewToggle(0)}/>
+        
             {
                 user ? 
-                <div className="mx-3 cursor-pointer" onClick={handleSignOut}>
-                    <img src={user?.photoURL} alt="user" title="sign out" className="border-2 rounded" />
+                <div className="w-full flex justify-between">
+                    <div className="text-gray-400">
+                        <button className="text-lg mx-2 hover:text-white focus:text-white" onClick={()=>handleViewToggle(0)}>Movies</button>
+                        <button className="text-lg mx-2 hover:text-white focus:text-white" onClick={()=>handleViewToggle(1)}>Shows</button>
+                        <button className="text-lg mx-2 hover:text-white focus:text-white" onClick={()=>handleViewToggle(2)}>GPT</button>
+                    </div>
+                    <div className="mx-3 cursor-pointer" onClick={handleSignOut}>
+                        <img src={user?.photoURL} alt="user" title="sign out" className="border-2 rounded" />
+                    </div>
                 </div> : ''
             }
             

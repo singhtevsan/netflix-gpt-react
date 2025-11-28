@@ -1,6 +1,8 @@
-import useNowPlayingMovies from "../hooks/useNowPlayingMovies";
+import { useSelector } from "react-redux";
 import MoviesContainer from "./MoviesContainer";
 import TrailerContainer from "./TrailerContainer";
+import useGetAllTheData from "../hooks/useGetAllTheData";
+import ShowsTrailerContainer from "./ShowsTrailerContainer";
 
 
 /*
@@ -16,14 +18,36 @@ import TrailerContainer from "./TrailerContainer";
 
 const Browse = () => {
 
-    useNowPlayingMovies();
+    useGetAllTheData();
 
-    return (
-        <div>
-            <TrailerContainer />
-            <MoviesContainer />
-        </div>
-    )
+    const page = useSelector((store)=>store.view.page);
+
+    if(page!==2){
+
+        if(page===0) {
+            return(
+                <div>
+                    <TrailerContainer />
+                    <MoviesContainer />
+                </div>
+            )
+        }
+        if(page===1){
+            return(
+                <div>
+                    <ShowsTrailerContainer />
+                </div>
+            )
+        }
+    }
+    else{
+        return(
+            <div>
+                GPT
+            </div>
+        )
+    }
+        
 };
 
 export default Browse;

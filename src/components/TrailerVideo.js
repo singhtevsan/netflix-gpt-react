@@ -1,8 +1,8 @@
 import useGetMovieTrailer from "../hooks/useGetMovieTrailer";
 
-const TrailerVideo = ({movieId}) => {
+const TrailerVideo = ({movieId,page}) => {
 
-    const key =useGetMovieTrailer(movieId);
+    const key = useGetMovieTrailer(movieId,page);
 
     return (
         <div className="w-screen">
