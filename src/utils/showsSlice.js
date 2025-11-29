@@ -4,7 +4,10 @@ const showsSlice = createSlice({
     name:"shows",
     initialState: {
         nowPlayingShows: null,
-        upcomingShows: null
+        upcomingShows: null,
+        popularShows: null,
+        topRatedShows: null,
+        showsGenre: null
     },
     reducers: {
         addNowPlayingShows: (state, action) => {
@@ -12,9 +15,19 @@ const showsSlice = createSlice({
         },
         addUpcomingShows: (state, action) => {
             state.upcomingShows = action.payload;
+        },
+        addPopularShows: (state, action) => {
+            state.popularShows = action.payload;
+        },
+        addTopRatedShows: (state, action) => {
+            state.topRatedShows = action.payload;
+        },
+        addShowsGenre: (state, action) => {
+            state.showsGenre = action.payload;
         }
     }
 });
 
-export const { addNowPlayingShows, addUpcomingShows } = showsSlice.actions;
+export const { addNowPlayingShows, addUpcomingShows, 
+        addPopularShows, addTopRatedShows, addShowsGenre } = showsSlice.actions;
 export default showsSlice.reducer;

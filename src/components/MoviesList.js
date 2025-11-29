@@ -7,7 +7,7 @@ const MoviesList = (props) => {
     return(
         <div>
             <h1 className="font-bold text-white px-4">{title}</h1>
-            <div className="flex py-2 scroll">
+            <div className="flex p-2 scroll">
                 <div className="flex">
                     {
                         list.map((item) => {
