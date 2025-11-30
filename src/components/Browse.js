@@ -4,6 +4,7 @@ import TrailerContainer from "./TrailerContainer";
 import useGetAllTheData from "../hooks/useGetAllTheData";
 import ShowsTrailerContainer from "./ShowsTrailerContainer";
 import ShowsContainer from "./ShowsContainer";
+import Search from "./Search";
 
 
 /*
@@ -45,7 +46,7 @@ const Browse = () => {
     else{
         return(
             <div>
-                GPT
+                <Search />
             </div>
         )
     }
