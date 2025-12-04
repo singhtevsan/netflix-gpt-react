@@ -4,6 +4,7 @@ import moviesReducer from "./movieSlice";
 import showsReducer from "./showsSlice";
 import trailerReducer from "./trailerSlice";
 import viewReducer from "./changeViewSlice";
+import gptReducer from "./gptSlice";
 
 const appStore = configureStore({
 
@@ -12,7 +13,8 @@ const appStore = configureStore({
         movies: moviesReducer,
         shows: showsReducer,
         trailer: trailerReducer,
-        view: viewReducer
+        view: viewReducer,
+        gpt: gptReducer
     }
 });
 

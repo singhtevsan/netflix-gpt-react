@@ -1,9 +1,15 @@
 import { useRef } from "react";
 import openai from "../utils/openAi";
+import searchMovieOnTmdb from "../utils/searchMovieOnTmdb";
+import filterTmdbMovies from "../utils/filterTmdbMovies";
+import { useDispatch } from "react-redux";
+import { addGptMovies } from "../utils/gptSlice";
+import GptMoviesContainer from "./GptMoviesContainer";
 
 const Search = () => {
 
     const input = useRef(null);
+    const dispatch = useDispatch();
 
     const handleSearchForm = async () => {
         // make an api call on the openAi and get movies result
@@ -19,7 +25,17 @@ const Search = () => {
         model: "gpt-4.1-nano",
         });
 
-        console.log(gptSearchResults.choices?.[0]?.message?.content);
+        // ["Chashme Buddoor", "Hera Pheri", "Jaane Bhi Do Yaaro", "Andaz Apna Apna", "Golmaal Returns"]
+        const gptSuggestedNames = gptSearchResults.choices?.[0]?.message?.content.split(",").map(s=>s.trim());
+
+        // calling search movies on tmdb it will return promise array
+        const promiseArray = gptSuggestedNames.map((name)=>searchMovieOnTmdb(name));
+        const allTmdbMovies = await Promise.all(promiseArray);
+        
+        // filter the required movies from all returned tmdb movies and put it on store
+        const actualMovies = filterTmdbMovies(allTmdbMovies,gptSuggestedNames);
+        dispatch(addGptMovies(actualMovies));
+
     };
 
     return(
@@ -36,7 +52,7 @@ const Search = () => {
                 </form>
             </div>
             <div>
-
+                <GptMoviesContainer />
             </div>
         </div>
     );
