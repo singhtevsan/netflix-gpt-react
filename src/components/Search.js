@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import openai from "../utils/openAi";
 import searchMovieOnTmdb from "../utils/searchMovieOnTmdb";
 import filterTmdbMovies from "../utils/filterTmdbMovies";
@@ -10,10 +10,13 @@ const Search = () => {
 
     const input = useRef(null);
     const dispatch = useDispatch();
+    const [message, setMessage] = useState(false);
 
     const handleSearchForm = async () => {
+
+        setMessage(true);
+
         // make an api call on the openAi and get movies result
-        
         const gptQuery = 
             "Act as a Movie Recommendation system and suggest some movies for the query : " + input.current.value
             +". only give me names of 10 movies, comma seperated like the example result given ahead "
@@ -51,8 +54,15 @@ const Search = () => {
                     <input ref={input} className="text-center text-lg w-full h-12 p-2 rounded-full border-black border-2 focus:outline-none" type="text" placeholder="What would you like to watch" />
                 </form>
             </div>
-            <div>
-                <GptMoviesContainer />
+            <div className="h-[50vh] bg-gradient-to-b from-black ">
+                {
+                    !message ? 
+                    <div className=" text-white p-20 text-center">
+                        <h1 className="font-bold text-6xl">No Content Available !!</h1>
+                        <h2 className="text-4xl my-2">Try to provide some interesting query.</h2>
+                    </div> : 
+                    <GptMoviesContainer />
+                }
             </div>
         </div>
     );

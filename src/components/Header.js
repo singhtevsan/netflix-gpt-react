@@ -74,8 +74,11 @@ const Header = () => {
                         <button className="text-lg mx-2 hover:text-white focus:text-white" onClick={()=>handleViewToggle(1)}>Shows</button>
                         <button className="text-lg mx-2 hover:text-white focus:text-white" onClick={()=>handleViewToggle(2)}>GPT</button>
                     </div>
-                    <div className="mx-3 cursor-pointer" onClick={handleSignOut}>
-                        <img src={user?.photoURL} alt="user" title="sign out" className="border-2 rounded" />
+                    <div className="flex">
+                        <span className="text-white font-bold">{user?.displayName}</span>
+                        <div className="mx-3 cursor-pointer" onClick={handleSignOut}>
+                            <img src={user?.photoURL} alt="user" title="sign out" className="border-2 rounded" />
+                        </div>
                     </div>
                 </div> : ''
             }
